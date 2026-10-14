@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Will you be my dear friend, Dhasara?</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, #1a0b1f 0%, #2e1435 100%);
+            font-family: 'Segoe UI', 'Poppins', system-ui, -apple-system, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            touch-action: pan-y;
+            padding: 12px;
+        }
+
+        /* floating heart balloons container */
+        .balloon-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .balloon {
+            position: absolute;
+            font-size: 2.2rem;
+            animation: floatUp 14s infinite ease-in-out;
+            opacity: 0.7;
+            filter: drop-shadow(0 0 8px rgba(255, 80, 120, 0.5));
+            will-change: transform, opacity;
+            user-select: none;
+            pointer-events: none;
+        }
+
+        .balloon:nth-child(1) { left: 5%; animation-duration: 18s; animation-delay: 0s; font-size: 2rem; }
+        .balloon:nth-child(2) { left: 20%; animation-duration: 12s; animation-delay: 2s; font-size: 2.8rem; }
+        .balloon:nth-child(3) { left: 38%; animation-duration: 16s; animation-delay: 1s; font-size: 1.8rem; }
+        .balloon:nth-child(4) { left: 55%; animation-duration: 20s; animation-delay: 3s; font-size: 3rem; }
+        .balloon:nth-child(5) { left: 72%; animation-duration: 13s; animation-delay: 0.5s; font-size: 2.5rem; }
+        .balloon:nth-child(6) { left: 88%; animation-duration: 17s; animation-delay: 2.5s; font-size: 2rem; }
+        .balloon:nth-child(7) { left: 45%; animation-duration: 22s; animation-delay: 4s; font-size: 2.2rem; }
+        .balloon:nth-child(8) { left: 10%; animation-duration: 15s; animation-delay: 5s; font-size: 2.6rem; }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(110vh) rotate(0deg) scale(0.8);
+                opacity: 0.2;
+            }
+            20% { opacity: 0.8; }
+            80% { opacity: 0.9; }
+            100% {
+                transform: translateY(-30vh) rotate(20deg) scale(1.1);
+                opacity: 0;
+            }
+        }
+
+        /* main card */
+        .card {
+            position: relative;
+            z-index: 20;
+            background: rgba(20, 5, 25, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 56px 56px 48px 48px;
+            padding: 2.2rem 1.8rem 2rem;
+            max-width: 440px;
+            width: 100%;
+            box-shadow: 0 25px 40px -10px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 120, 160, 0.3);
+            text-align: center;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255, 140, 180, 0.2);
+        }
+
+        h1 {
+            font-size: 1.9rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #ffc0d0, #ff9eb5);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.5px;
+            line-height: 1.3;
+            text-shadow: 0 0 20px rgba(255, 100, 150, 0.4);
+        }
+
+        .sub-message {
+            font-size: 1rem;
+            color: #fbc2d3;
+            margin-bottom: 1.6rem;
+            font-weight: 300;
+            letter-spacing: 0.3px;
+        }
+
+        .name {
+            font-weight: 700;
+            color: #ffb0c3;
+            text-shadow: 0 0 12px #ff3e6b;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 18px;
+            margin: 1.2rem 0 1.5rem;
+            position: relative;
+            min-height: 80px;
+        }
+
+        .btn {
+            border: none;
+            background: linear-gradient(145deg, #ff6b8b, #d43f5e);
+            color: white;
+            font-weight: 600;
+            font-size: 1.6rem;
+            padding: 0.9rem 2.2rem;
+            border-radius: 60px;
+            box-shadow: 0 12px 25px -8px #b11e3f, 0 0 0 2px rgba(255, 255, 255, 0.1) inset;
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.2s, background 0.2s;
+            letter-spacing: 1px;
+            flex: 1 0 auto;
+            min-width: 130px;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .btn:active {
+            transform: scale(0.96);
+            box-shadow: 0 6px 15px -5px #b11e3f;
+        }
+
+        .btn-yes {
+            background: linear-gradient(145deg, #ff4f7a, #c9184a);
+            box-shadow: 0 12px 25px -8px #b11e3f, 0 0 0 2px rgba(255, 220, 240, 0.4) inset;
+            font-size: 1.8rem;
+            padding: 1rem 2.5rem;
+        }
+
+        .btn-no {
+            background: linear-gradient(145deg, #5e3a4b, #3e2533);
+            box-shadow: 0 8px 18px -6px #2a0f1c, 0 0 0 1px rgba(255, 200, 220, 0.2) inset;
+            font-size: 1.6rem;
+            transition: all 0.12s cubic-bezier(0.2, 1, 0.3, 1);
+            position: relative;
+            z-index: 5;
+        }
+
+        /* message area */
+        .message-box {
+            min-height: 110px;
+            margin-top: 1rem;
+            padding: 0.8rem 0.5rem;
+            background: rgba(255, 220, 235, 0.08);
+            border-radius: 40px;
+            border: 1px dashed rgba(255, 150, 180, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s ease;
+            font-size: 1.1rem;
+            line-height: 1.5;
+            color: #ffd9e4;
+            word-break: break-word;
+            padding: 1rem;
+            backdrop-filter: blur(6px);
+        }
+
+        .message-box .big-emoji {
+            font-size: 2.6rem;
+            line-height: 1;
+            filter: drop-shadow(0 0 12px #ff4d6d);
+            animation: pulseEmoji 1.5s infinite;
+        }
+
+        @keyframes pulseEmoji {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+
+        .message-box .venue {
+            font-weight: 700;
+            color: #ffb3c6;
+            background: rgba(255, 80, 120, 0.2);
+            border-radius: 40px;
+            padding: 0.25rem 1rem;
+            display: inline-block;
+            margin-top: 0.3rem;
+            font-size: 1.2rem;
+            letter-spacing: 0.5px;
+        }
+
+        .message-box .time-place {
+            font-size: 1rem;
+            color: #fccfdd;
+            margin-top: 6px;
+        }
+
+        .small-heart {
+            color: #ff4d6d;
+            font-size: 1.4rem;
+            margin: 0 2px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* for desktop / bigger screens */
+        @media (min-width: 600px) {
+            .card {
+                padding: 2.8rem 2.5rem;
+            }
+            h1 {
+                font-size: 2.3rem;
+            }
+            .btn {
+                font-size: 1.8rem;
+                padding: 1rem 2.5rem;
+            }
+        }
+
+        /* ensure no overflow on tiny screens */
+        @media (max-width: 380px) {
+            .card {
+                padding: 1.5rem 1rem;
+                border-radius: 40px;
+            }
+            h1 {
+                font-size: 1.6rem;
+            }
+            .btn {
+                font-size: 1.3rem;
+                padding: 0.7rem 1rem;
+                min-width: 110px;
+            }
+            .btn-yes {
+                font-size: 1.5rem;
+            }
+            .message-box {
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- floating heart balloons -->
+    <div class="balloon-container">
+        <div class="balloon">❤️</div>
+        <div class="balloon">💖</div>
+        <div class="balloon">💗</div>
+        <div class="balloon">❤️</div>
+        <div class="balloon">💓</div>
+        <div class="balloon">💕</div>
+        <div class="balloon">💘</div>
+        <div class="balloon">💝</div>
+    </div>
+
+    <!-- main interactive card -->
+    <div class="card" id="mainCard">
+        <h1>Will you be my dear friend,<br><span class="name">Dhasara</span>? 💸</h1>
+        <div class="sub-message">(I'll send you some money 💰)</div>
+
+        <div class="btn-group">
+            <button class="btn btn-yes" id="yesBtn">YES 😏</button>
+            <button class="btn btn-no" id="noBtn">NO 🙅</button>
+        </div>
+
+        <!-- dynamic message area -->
+        <div class="message-box" id="messageBox">
+            <span style="opacity:0.8;">💸  your answer matters  💸</span>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            const noBtn = document.getElementById('noBtn');
+            const yesBtn = document.getElementById('yesBtn');
+            const messageBox = document.getElementById('messageBox');
+            let yesClicked = false;
+
+            // ---- Helper: move the No button away ----
+            function moveNoButtonAway(triggerEvent) {
+                if (yesClicked) return;
+
+                // Move the button to a random position inside the viewport
+                const btnRect = noBtn.getBoundingClientRect();
+                const btnWidth = btnRect.width;
+                const btnHeight = btnRect.height;
+
+                const maxX = window.innerWidth - btnWidth - 16;
+                const maxY = window.innerHeight - btnHeight - 16;
+                const minX = 16;
+                const minY = 16;
+
+                let newX, newY;
+                let attempts = 0;
+                let currentLeft = btnRect.left;
+                let currentTop = btnRect.top;
+                do {
+                    newX = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
+                    newY = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
+                    attempts++;
+                } while (
+                    Math.abs(newX - currentLeft) < 60 && 
+                    Math.abs(newY - currentTop) < 60 && 
+                    attempts < 30
+                );
+
+                noBtn.style.position = 'fixed';
+                noBtn.style.left = newX + 'px';
+                noBtn.style.top = newY + 'px';
+                noBtn.style.bottom = 'auto';
+                noBtn.style.right = 'auto';
+                noBtn.style.margin = '0';
+                noBtn.style.zIndex = '999';
+                noBtn.style.transition = 'left 0.2s ease, top 0.2s ease, transform 0.1s';
+                
+                const rot = (Math.random() * 10 - 5).toFixed(1);
+                noBtn.style.transform = `rotate(${rot}deg)`;
+
+                // Change text slightly when it runs away
+                if (!noBtn.classList.contains('moved')) {
+                    noBtn.classList.add('moved');
+                    noBtn.textContent = 'NO 🏃';
+                }
+            }
+
+            // ---- Event listeners for No button ----
+            const handleNoInteract = (e) => {
+                e.preventDefault();
+                if (yesClicked) return;
+                moveNoButtonAway(e);
+            };
+
+            noBtn.addEventListener('touchstart', handleNoInteract, { passive: false });
+            noBtn.addEventListener('mousedown', handleNoInteract);
+            noBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (!yesClicked) {
+                    moveNoButtonAway(e);
+                }
+            });
+
+            // Ensure touchstart prevents scroll
+            noBtn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+            }, { passive: false });
+
+            // ----- YES button logic -----
+            yesBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (yesClicked) return;
+                yesClicked = true;
+
+                // Hide no button
+                noBtn.style.display = 'none';
+
+                // Change yes button text / style
+                yesBtn.textContent = '🤣 I knew it! 🤣';
+                yesBtn.style.background = 'linear-gradient(145deg, #b33b5c, #8a1e3c)';
+                yesBtn.style.boxShadow = '0 0 20px #ff4d6d';
+
+                // Show the message with "fuck symbol" (🖕) and hotel info
+                messageBox.innerHTML = `
+                    <div class="big-emoji">🖕😭🖕</div>
+                    <div style="font-size:1.2rem; font-weight:600; margin-bottom:4px;">I knew u are biggest chutiya 🤣</div>
+                    <div style="font-size:1rem;">Meet you today at</div>
+                    <div class="venue">🍛 Pattanager Shedd 🤣🤣</div>
+                    <div style="font-size:1.1rem; margin-top:4px;">"Jalgara Ladge" some hotel</div>
+                    <div class="time-place">⏰ 1:00 AM &nbsp;|&nbsp; 📍 Pattanager</div>
+                    <div style="margin-top:8px; font-size:1.4rem;">😭 🖕 😭</div>
+                `;
+
+                // Add dramatic card shadow
+                document.querySelector('.card').style.boxShadow = '0 0 35px #ff4d6d, 0 0 0 2px #ffb3c6';
+            });
+
+            // Handle window resize for fixed No button
+            window.addEventListener('resize', () => {
+                if (yesClicked) return;
+                if (noBtn.style.position === 'fixed') {
+                    const rect = noBtn.getBoundingClientRect();
+                    if (rect.left < 0 || rect.right > window.innerWidth || rect.top < 0 || rect.bottom > window.innerHeight) {
+                        const safeX = Math.min(Math.max(rect.left, 10), window.innerWidth - rect.width - 10);
+                        const safeY = Math.min(Math.max(rect.top, 10), window.innerHeight - rect.height - 10);
+                        noBtn.style.left = safeX + 'px';
+                        noBtn.style.top = safeY + 'px';
+                    }
+                }
+            });
+        })();
+    </script>
+</body>
+</html>
